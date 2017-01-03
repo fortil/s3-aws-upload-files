@@ -12,8 +12,8 @@ function calculateMD5Hash(file, successCB, errorCB) {
                 .replace(/ +$/, "")
                 .split(" ");
             var byteString = String.fromCharCode.apply(null, hexArray);
-            var base64string = btoa(byteString);
-            successCB(base64string);
+            var toB64 = btoa(byteString);
+            successCB({ toB64: toB64, md5: md5 });
         }, errorCB);
     }
 }

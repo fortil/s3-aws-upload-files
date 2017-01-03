@@ -28,16 +28,17 @@ var GenerateHashS3 = (function () {
                 ["starts-with", "$key", folder],
                 { "acl": 'public-read' },
                 ["starts-with", "$Content-Type", ""],
-                ["content-length-range", 0, 10485760]
+                ["content-length-range", 0, 10485760],
             ] };
         if (md5 && md5 != false)
             policy.conditions.push(["starts-with", "$Content-MD5", ""]);
+        policy.conditions.push(["starts-with", "$x-amz-meta-md5", ""]);
+        policy.conditions.push(["starts-with", "$x-amz-meta-hash64", ""]);
         if (meta && meta != false) {
             for (var i = 0, e = meta.length; i < e; ++i) {
                 policy.conditions.push(meta[i]);
             }
         }
-        console.log('GenerateHashS3 policy: ', policy);
         var policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
         var bucket = this.bucket;
         var awsKey = this.awsKey;

@@ -19,10 +19,10 @@ var GetMime_1 = require("./GetMime");
 function s3Uploader(conf, md5, successCB, errorCB) {
     if (successCB === void 0) { successCB = function (res) { console.log(res); }; }
     if (errorCB === void 0) { errorCB = function (err) { console.log(err); }; }
-    CalculateMD5Hash_1.calculateMD5Hash(conf.filePath, function (hashMD5) {
+    CalculateMD5Hash_1.calculateMD5Hash(conf.filePath, function (hash) {
         // Genera los datos necesarios para S3
         var Hash = new GenerateHashS3_1.GenerateHashS3(conf.bucket, conf.secret, conf.awsKey);
-        var data = Hash.generate(conf.folder + conf.fileName, conf.folder, (md5 && md5 == true) ? hashMD5 : false, (conf.meta && typeof conf.meta == 'object') ? conf.meta : false);
+        var data = Hash.generate(conf.folder + conf.fileName, conf.folder, (md5 && md5 == true) ? hash : false, (conf.meta && typeof conf.meta == 'object') ? conf.meta : false);
         // Para detectar el mime del archivo
         var mime = new GetMime_1.GetMime();
         var params = {
@@ -35,7 +35,9 @@ function s3Uploader(conf, md5, successCB, errorCB) {
         };
         // Se añade el md5 del archivo, si existe
         if (md5 && md5 == true) {
-            params["Content-MD5"] = hashMD5;
+            params["Content-MD5"] = hash.toB64;
+            params["x-amz-meta-md5"] = hash.md5;
+            params["x-amz-meta-hash64"] = hash.toB64;
         }
         // Se crea el objeto para aplicación opciones a FileTransfer
         var options = new FileUploadOptions();
@@ -58,7 +60,6 @@ function s3Uploader(conf, md5, successCB, errorCB) {
         if (conf.meta) {
             options.meta = conf.meta;
         }
-        console.log('options s3-uploader: ', options);
         // Se añaden todos los parámetros que llegan
         options.params = params;
         // Se crea el objeto FileTransfer y se le pasan las opciones

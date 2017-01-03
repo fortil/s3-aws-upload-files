@@ -17,8 +17,8 @@ export function calculateMD5Hash(file:any, successCB = (res:any)=>console.log(re
                     .replace(/ +$/, "")
                     .split(" ");
       let byteString = String.fromCharCode.apply(null, hexArray);
-      let base64string = btoa(byteString);
-      successCB(base64string);
+      let toB64 = btoa(byteString);
+      successCB({toB64, md5});
 
     }, errorCB);
   }

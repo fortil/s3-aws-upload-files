@@ -33,16 +33,18 @@ export class GenerateHashS3{
             ["starts-with", "$key", folder],
             {"acl": 'public-read'},
             ["starts-with", "$Content-Type", ""],
-            ["content-length-range", 0, 10485760]
+            ["content-length-range", 0, 10485760],
         ]};
       if( md5 && md5 != false )
         policy.conditions.push(["starts-with", "$Content-MD5", ""]);
+        policy.conditions.push(["starts-with", "$x-amz-meta-md5", ""]);
+        policy.conditions.push(["starts-with", "$x-amz-meta-hash64", ""]);
       if( meta && meta != false){
         for (var i = 0, e = meta.length ; i < e; ++i) {
           policy.conditions.push(meta[i]);
         }
       }
-      console.log('GenerateHashS3 policy: ',policy);
+
       let policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
       let bucket = this.bucket;
       let awsKey = this.awsKey;
