@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Save Image App</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <script src="./js/libs/jquery.min.js"></script>
+</head>
+<body>
+  
+  <div class="col-xs-12 hYw">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10 hYw">
+      <h2 align="center">Save Image</h2>
+      <div class="alignAbsoluteCenterV">
+        <div class="primero alignAbsoluteCenterV">
+          <button type="button" id="downloadImg" class="recordSong btn btn-danger col-xs-12 btn-lg btnCurrent">Descargar Imagen</button>
+        </div>
+        <div class="primero alignAbsoluteCenterV">
+          <button type="button" id="uploadImg" class="recordSong btn btn-danger col-xs-12 btn-lg btnCurrent">Subir Imagen</button>
+        </div>
+        <div class="segundo alignAbsoluteCenterV">
+          <img src="" alt="" id="imagen" class="imagen">
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-1"></div>
+  </div>
+  <!-- <div class="col-xs-12 text-warning" style="position: absolute; bottom: 10px; right: 10px">William Penagos</div> -->
+  <script src="./cordova.js"></script>
+  <script src="./js/libs/bootstrap.min.js"></script>
+  <script src="./js/dist/S3Downloader.web.js"></script>
+  <script src="./js/dist/S3Uploader.web.js"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/index.js"></script>
+</body>
+</html>
