@@ -8,12 +8,11 @@ function displayImageByFileURL( src ) {
 
 document.addEventListener('deviceready', function(){
   // Url de la imagen a descargar
-  var urlDownload = 'http://cdn.inmotionhosting.com/support/images/stories/wordpress-plugins/ithemes-security-hide-url-1.png';
+  var urlDownload = urlAWS+Folder+'IMG_20161228_155133.jpg';
   // nombre del archivo generado aleatoriamente que se le dará a la descarga
-  var fileName = 'ARCHIVO_DE_PRUEBA.png';
+  var fileName = 'IMG_20161228_155133.png';
   // Imagen que se descarga después de darclick en el botón de descarga
   var ImagenDownloaded = null;
-
 
   document.getElementById('downloadImg').addEventListener('click', function(){
     
@@ -54,7 +53,15 @@ document.addEventListener('deviceready', function(){
         fileName: fileName,
         urlServer: urlAWS,
       },
-      true
+      true,
+      function( res ){
+        console.log("Succes: ",res)
+        alert( res )
+      },
+      function( error ){
+        console.log("Error: ",error)
+        alert( error )
+      }
     )
   })
 

@@ -21,7 +21,7 @@ declare const FileTransfer: any;
 */
 
 function s3Uploader(conf:any, md5:boolean, successCB:any = (res:any) => { console.log(res) }, errorCB:any = (err:any) => { console.log(err) }) {
-  calculateMD5Hash(conf.imageUrl, function( hashMD5 ){
+  calculateMD5Hash(conf.filePath, function( hashMD5 ){
     
      // Genera los datos necesarios para S3
     let Hash = new GenerateHashS3( conf.bucket, conf.secret, conf.awsKey );

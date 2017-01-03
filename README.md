@@ -3,7 +3,7 @@
 
 ## Plugins necesarios
 ```
-$ cordova plugin add de.fastr.phonegap.plugins.md5chksum
+$ cordova plugin add https://github.com/fastrde/phonegap-md5.git
 $ cordova plugin add cordova-plugin-file-transfer
 ```
 

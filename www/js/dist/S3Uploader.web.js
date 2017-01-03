@@ -31,7 +31,7 @@
                 console.log(err);
             };
         }
-        CalculateMD5Hash_1.calculateMD5Hash(conf.imageUrl, function(hashMD5) {
+        CalculateMD5Hash_1.calculateMD5Hash(conf.filePath, function(hashMD5) {
             var Hash = new GenerateHashS3_1.GenerateHashS3(conf.bucket, conf.secret, conf.awsKey);
             var data = Hash.generate(conf.folder + conf.fileName, conf.folder, md5 && md5 == true ? hashMD5 : false);
             var mime = new GetMime_1.GetMime();
