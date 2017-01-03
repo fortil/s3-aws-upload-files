@@ -21,7 +21,7 @@ export class GenerateHashS3{
     this.awsKey = awsKey;
   }
    
-  generate( fileName:string, folder:string = "test/", md5:any ) {
+  generate( fileName:string, folder:string = "test/", md5:any, meta:any ) {
       // let expiration = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
       let expiration = new Date(new Date("2020-10-29T22:55:11.186Z").getTime() + (1000 * 60 * 60 * 5)).toISOString();
    
@@ -37,7 +37,12 @@ export class GenerateHashS3{
         ]};
       if( md5 && md5 != false )
         policy.conditions.push(["starts-with", "$Content-MD5", ""]);
-       // Variables a enviar ya procesadas
+      if( meta && meta != false){
+        for (var i = 0, e = meta.length ; i < e; ++i) {
+          policy.conditions.push(meta[i]);
+        }
+      }
+      console.log('GenerateHashS3 policy: ',policy);
       let policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
       let bucket = this.bucket;
       let awsKey = this.awsKey;

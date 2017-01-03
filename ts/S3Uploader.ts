@@ -25,7 +25,7 @@ function s3Uploader(conf:any, md5:boolean, successCB:any = (res:any) => { consol
     
      // Genera los datos necesarios para S3
     let Hash = new GenerateHashS3( conf.bucket, conf.secret, conf.awsKey );
-    let data = Hash.generate( conf.folder+conf.fileName, conf.folder, (md5 && md5 == true) ? hashMD5 : false );
+    let data = Hash.generate( conf.folder+conf.fileName, conf.folder, (md5 && md5 == true) ? hashMD5 : false, (conf.meta && typeof conf.meta == 'object') ? conf.meta : false );
     // Para detectar el mime del archivo
     let mime = new GetMime();
 
@@ -38,12 +38,9 @@ function s3Uploader(conf:any, md5:boolean, successCB:any = (res:any) => { consol
       "Content-Type": mime.byExt(conf.fileName),
       // "enable_content_md5": "enable",
     }
-
+    // Se añade el md5 del archivo, si existe
     if(md5 && md5 == true){
       params["Content-MD5"] = hashMD5;
-      // params["headers"] = {
-      //   "md5chksum": hashMD5
-      // }
     }
 
     
@@ -60,19 +57,18 @@ function s3Uploader(conf:any, md5:boolean, successCB:any = (res:any) => { consol
     options.httpMethod = 'POST';
     // Se codifica la url del servidor
     let uri = encodeURI(conf.urlServer);
-    // if (params["Content-MD5"]) {
-    //   if(options.headers || options.headers==null)
-    //     options.headers = {}
 
-    //   options.headers["Content-MD5"] = params["Content-MD5"];
-    //   delete params["Content-MD5"];
-    // }
     if( conf.headers ){
-      let headers = conf.headers;
-      options.headers = headers;
-      delete params.headers
-    }
 
+      let headKeys = Object.keys(conf.headers);
+      for (var i = 0, l = headKeys.length; i < l; ++i) {
+        params[headKeys[i]] = conf.headers[headKeys[i]];
+      }
+    }
+    if( conf.meta ){
+      options.meta = conf.meta
+    }
+    console.log('options s3-uploader: ',options)
     // Se añaden todos los parámetros que llegan
     options.params = params;
     // Se crea el objeto FileTransfer y se le pasan las opciones

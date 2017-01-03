@@ -9,12 +9,13 @@ module.exports = {
   // target: 'web',
   watch: true,
   entry: {
-    S3Downloader: './src/S3Downloader.js',
+    // S3Downloader: './src/S3Downloader.js',
     S3Uploader: './src/S3Uploader.js',
   },
   output: {
     // library: ['Helpers', 'SQLRecords'],
     path: './www/js/dist/',
+    // path: '../recordAudiojQuery/www/js/libs/',
     filename: '[name].web.js',
   },
 

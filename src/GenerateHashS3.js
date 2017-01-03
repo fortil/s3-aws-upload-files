@@ -17,7 +17,7 @@ var GenerateHashS3 = (function () {
         this.secret = secret;
         this.awsKey = awsKey;
     }
-    GenerateHashS3.prototype.generate = function (fileName, folder, md5) {
+    GenerateHashS3.prototype.generate = function (fileName, folder, md5, meta) {
         if (folder === void 0) { folder = "test/"; }
         // let expiration = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
         var expiration = new Date(new Date("2020-10-29T22:55:11.186Z").getTime() + (1000 * 60 * 60 * 5)).toISOString();
@@ -32,7 +32,12 @@ var GenerateHashS3 = (function () {
             ] };
         if (md5 && md5 != false)
             policy.conditions.push(["starts-with", "$Content-MD5", ""]);
-        // Variables a enviar ya procesadas
+        if (meta && meta != false) {
+            for (var i = 0, e = meta.length; i < e; ++i) {
+                policy.conditions.push(meta[i]);
+            }
+        }
+        console.log('GenerateHashS3 policy: ', policy);
         var policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
         var bucket = this.bucket;
         var awsKey = this.awsKey;
