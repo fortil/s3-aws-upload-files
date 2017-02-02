@@ -16,3 +16,8 @@ Los ejemplos de uso de los archivos están en <code>www/js/index.js</code>.
 En la carpeta <code>ts/</code> se encuentra la versión para typescript
 
 En la carpeta <code>src/</code> se encuentran los archivos .js
+
+
+TODO
+----
+* Crear un método abreviado para las cabeceras extras de los archivos.

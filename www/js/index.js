@@ -52,6 +52,12 @@ document.addEventListener('deviceready', function(){
         folder: Folder,
         fileName: fileName,
         urlServer: urlAWS,
+        meta:[
+          ["starts-with", "$x-amz-meta-holamundo", ""]
+        ],
+        headers:{
+          "x-amz-meta-holamundo":"hola-probando"
+        }
       },
       true,
       function( res ){
